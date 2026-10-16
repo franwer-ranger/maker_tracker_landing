@@ -1,0 +1,171 @@
+/*
+ * Maker Tracker design system (docs/DESIGN.md in the app repo).
+ * Same token names and values as Paper and the app.
+ */
+
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/Geist-Variable.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/GeistMono-Variable.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/InstrumentSerif-Regular.woff2") format("woff2");
+}
+
+:root {
+  --color-bg: #000000;
+  --color-surface-sunken: #0A0A0A;
+  --color-surface: #1D1D1D;
+  --color-border: #2A2A2A;
+  --color-border-strong: #3A3A3A;
+  --color-text: #FFFFFF;
+  --color-text-soft: #EDEDED;
+  --color-text-muted: #9E9C9C;
+  --color-text-subtle: #6E6E6E;
+  --color-accent: #FF3F01;
+  --color-accent-hover: #FF5A24;
+  --color-avatar: #3D89F6;
+  --color-state-idea: #6B6B6B;
+  --color-state-defining: #E8B04A;
+  --color-state-ready: #F5F5F5;
+  --color-state-done: #5FB37A;
+
+  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-md: 6px;
+  --radius-xl: 12px;
+
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --gutter: 48px;
+
+  color-scheme: dark;
+}
+
+@media (max-width: 720px) {
+  :root { --gutter: 20px; }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body { margin: 0; overflow-wrap: anywhere; }
+
+a { color: inherit; text-decoration: none; }
+
+h1, h2, h3, p { margin: 0; font-weight: inherit; }
+
+.section { padding-inline: var(--gutter); }
+
+.label {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+/* Buttons. Focus: 2px of background + 2px of colour (orange on primary, white elsewhere). */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color 200ms var(--ease), color 200ms var(--ease);
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-text);
+}
+
+.btn--sm { height: 36px; padding-inline: 12px; font-size: 14px; line-height: 18px; }
+.btn--lg { height: 44px; padding-inline: 16px; font-size: 15px; line-height: 18px; }
+
+.btn--primary { background: var(--color-accent); color: var(--color-bg); padding-inline: 18px; }
+.btn--primary:hover { background: var(--color-accent-hover); }
+.btn--primary:focus-visible { box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-accent); }
+
+.btn--light { background: var(--color-text); color: var(--color-bg); padding-inline: 14px; }
+.btn--light:hover { background: var(--color-text-soft); }
+
+.btn--secondary { border: 1px solid var(--color-border-strong); color: var(--color-text); }
+.btn--secondary:hover { background: var(--color-surface); }
+
+.btn--ghost { color: var(--color-text); }
+.btn--ghost:hover .icon { transform: translateX(2px); }
+.btn--ghost .icon { transition: transform 200ms var(--ease); }
+
+.link { color: var(--color-text-muted); transition: color 200ms var(--ease); }
+.link:hover { color: var(--color-text); }
+.link:focus-visible {
+  outline: none;
+  border-radius: 2px;
+  box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-text);
+}
+
+/* Small dots: states and actors. */
+.dot { width: 6px; height: 6px; border-radius: 9999px; flex-shrink: 0; }
+.dot--live { background: var(--color-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 25%, transparent); }
+
+/* Window: terminal and app frames. */
+.window {
+  background: var(--color-surface-sunken);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: clip;
+}
+
+.window__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  padding-inline: 16px;
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}

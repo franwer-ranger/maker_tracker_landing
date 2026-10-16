@@ -1,0 +1,129 @@
+---
+const gone = ["Sprints", "Story points", "Velocity charts", "Fifteen custom fields"];
+
+const principles = [
+  {
+    title: "Agents are users, not plugins",
+    body: "Everything you can do in the UI, an agent can do over MCP or the CLI, with the same meaning. Answers are compact markdown, made for a context window.",
+  },
+  {
+    title: "Facts stay facts",
+    body: "Agents write reasoning and content. Maker Tracker owns transitions, dates, commits and who did what, and no agent can rewrite them.",
+  },
+  {
+    title: "Every alert comes with its options",
+    body: "What happened, what to read, what you can do. Each option is also a command, so you and your agents see the same thing.",
+  },
+  {
+    title: "Context lives with the project",
+    body: "Vision, decisions and principles are stored next to the stories, and agents load them before recommending anything.",
+  },
+];
+---
+
+<section class="light section">
+  <div class="light__intro">
+    <h2 class="light__title display">Light, on purpose.</h2>
+    <p class="light__text">
+      Sprints and points were built to measure human teams. Your agents build now. The bottleneck is how much you define.
+    </p>
+    <ul class="light__gone" aria-label="Not in Maker Tracker">
+      {gone.map((item) => <li><s>{item}</s></li>)}
+    </ul>
+  </div>
+
+  <ol class="light__principles">
+    {
+      principles.map((principle, index) => (
+        <li class="principle">
+          <span class="principle__letter">{String.fromCharCode(97 + index)}</span>
+          <span class="principle__body">
+            <h3 class="principle__title">{principle.title}</h3>
+            <p class="principle__text">{principle.body}</p>
+          </span>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .light {
+    display: flex;
+    gap: 96px;
+    padding-block: 128px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .light__intro {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    gap: 24px;
+    width: 440px;
+  }
+
+  .light__title {
+    font-size: clamp(44px, 4.45vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .light__text { color: var(--color-text-muted); font-size: 16px; line-height: 24px; }
+
+  .light__gone {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 16px 0 0;
+    list-style: none;
+    color: var(--color-text-subtle);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .light__gone s { text-decoration-thickness: 1px; }
+
+  .light__principles {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .principle {
+    display: flex;
+    gap: 24px;
+    padding-block: 24px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .principle__letter {
+    flex-shrink: 0;
+    width: 32px;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 28px;
+  }
+
+  .principle__body { display: flex; flex-direction: column; gap: 6px; }
+  .principle__title { font-size: 20px; font-weight: 500; line-height: 28px; }
+  .principle__text { color: var(--color-text-muted); font-size: 15px; line-height: 24px; }
+
+  @media (max-width: 1100px) {
+    .light { flex-direction: column; gap: 56px; }
+    .light__intro { width: auto; max-width: 560px; }
+  }
+
+  @media (max-width: 720px) {
+    .light { padding-block: 96px; }
+    .principle { gap: 12px; }
+    .principle__letter { width: 20px; }
+  }
+</style>

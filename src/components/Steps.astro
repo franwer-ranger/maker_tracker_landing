@@ -1,0 +1,114 @@
+---
+const steps = [
+  {
+    title: "Define with AI",
+    body: "Write the brief, the roadmap and stories with acceptance criteria and Paper mockups. Enough context for an agent to build without asking.",
+    meta: "Brief · Roadmap · Stories",
+  },
+  {
+    title: "Ask what's next",
+    body: "The agent crosses the roadmap, the open stories and what's already in the code, picks the one that makes most sense, and starts.",
+    meta: "$ mt next · $ mt start 49",
+  },
+  {
+    title: "Ship and report",
+    body: "It updates the state, links the commit and the PR, and leaves its decisions on the story. When it gets stuck, it asks you, with options.",
+    meta: "$ mt done 49 --pr 62",
+  },
+];
+---
+
+<section class="steps section" id="how-it-works">
+  <div class="steps__head">
+    <h2 class="steps__title display">Three steps, one loop</h2>
+    <p class="steps__intro">Your effort goes where it matters: deciding. The rest runs on its own and reports back.</p>
+  </div>
+
+  <ol class="steps__list">
+    {
+      steps.map((step, index) => (
+        <li class="step">
+          <span class="step__number">{String(index + 1).padStart(2, "0")}</span>
+          <h3 class="step__title">{step.title}</h3>
+          <p class="step__body">{step.body}</p>
+          <p class="step__meta">{step.meta}</p>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+    padding-bottom: 128px;
+    scroll-margin-top: 32px;
+  }
+
+  .steps__head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 64px;
+  }
+
+  .steps__title {
+    font-size: clamp(44px, 4.45vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .steps__intro {
+    max-width: 400px;
+    color: var(--color-text-muted);
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .steps__list {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0%;
+    gap: 16px;
+    padding: 32px 32px 0;
+  }
+
+  .step:first-child { padding-left: 0; }
+  .step:last-child { padding-right: 0; }
+  .step + .step { border-left: 1px solid var(--color-border); }
+
+  .step__number { color: var(--color-accent); font-family: var(--font-mono); font-size: 13px; line-height: 16px; }
+  .step__title { font-size: 22px; font-weight: 500; line-height: 28px; letter-spacing: -0.01em; }
+  .step__body { color: var(--color-text-muted); font-size: 15px; line-height: 24px; }
+
+  .step__meta {
+    padding-top: 8px;
+    color: var(--color-text-subtle);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  @media (max-width: 900px) {
+    .steps__head { flex-direction: column; align-items: start; gap: 20px; }
+    .steps__list { flex-direction: column; border-top: 0; }
+    .step,
+    .step:first-child,
+    .step:last-child { padding: 28px 0; border-top: 1px solid var(--color-border); }
+    .step + .step { border-left: 0; }
+  }
+
+  @media (max-width: 720px) {
+    .steps { padding-bottom: 96px; gap: 40px; }
+  }
+</style>

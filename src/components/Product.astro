@@ -1,0 +1,367 @@
+---
+const nav = [
+  { name: "Activity", count: 2, active: true },
+  { name: "Board" },
+  { name: "Roadmap" },
+  { name: "Brief" },
+];
+
+const attention = [
+  {
+    id: "#48",
+    origin: "wflow · implement · human decision",
+    live: true,
+    title: "claude asks: should the export include comments, or just the post?",
+    context: "Export post to PDF · read 05-decisions.md",
+    action: "Decide",
+  },
+  {
+    id: "#45",
+    origin: "wflow · review · PR #61 draft",
+    live: false,
+    title: "Scheduled posts: two review rounds done, the PR is waiting for you",
+    context: "3 findings applied · 1 dismissed with reason · 41 min · $3.12",
+    action: "View PR",
+  },
+];
+
+const happened = [
+  { time: "09:42", mark: "live", text: "wflow paused #48 in implement: claude needs a decision" },
+  { time: "09:15", mark: "decision", text: "New decision: generate PDFs with Prawn, not an external service" },
+  { time: "08:03", mark: "done", text: "codex finished #44 Draft autosave · merged in PR #59" },
+];
+
+const terminal = `> what should we do next?
+
+$ mt next
+#49  Reusable post templates
+     M2 · Ship without friction · Ready
+     3 criteria · 2 mockups · D-12
+
+$ mt show 49 --md
+# Reusable post templates
+As a maker who posts weekly, I want
+to save a post as a template...
+
+$ mt start 49
+→ in progress · claude · 22:41`;
+---
+
+<section class="product section" id="for-agents" aria-label="The same data for you and your agents">
+  <div class="product__col product__col--app">
+    <p class="label">For you · what needs your attention</p>
+    <div class="window app" aria-hidden="true">
+      <aside class="app__side">
+        <div class="app__top">
+          <div class="app__project">
+            <span class="app__project-mark"></span>
+            <span>
+              <span class="app__project-name">Postgram</span>
+              <span class="app__project-app">Maker Tracker</span>
+            </span>
+          </div>
+          <ul class="app__nav">
+            {
+              nav.map((item) => (
+                <li class:list={["app__nav-item", { "is-active": item.active }]}>
+                  {item.name}
+                  {item.count && <span class="app__count">{item.count}</span>}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <ul class="app__agents">
+          <li><span class="dot dot--live"></span><span class="mono">claude</span><span class="muted">on #48</span></li>
+          <li><span class="dot app__idle"></span><span class="mono">codex</span><span class="muted">idle · 2 h</span></li>
+        </ul>
+      </aside>
+
+      <div class="app__main">
+        <div class="app__head">
+          <p class="app__title">Activity</p>
+          <p class="app__subtitle">What happened in Postgram since your last visit · yesterday 23:10</p>
+        </div>
+
+        <div class="app__block">
+          <p class="app__label app__label--accent">Needs your attention</p>
+          <ul class="app__attention">
+            {
+              attention.map((row) => (
+                <li class:list={["app__row", { "is-live": row.live }]}>
+                  <span class="app__id">{row.id}</span>
+                  <span class="app__row-body">
+                    <span class:list={["app__origin", { "is-live": row.live }]}>{row.origin}</span>
+                    <span class="app__row-title">{row.title}</span>
+                    <span class="app__row-context">{row.context}</span>
+                  </span>
+                  <span class:list={["app__action", row.live ? "app__action--primary" : "app__action--secondary"]}>
+                    {row.action}
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div class="app__block app__block--happened">
+          <p class="app__label">What happened</p>
+          <ul class="app__happened">
+            {
+              happened.map((event) => (
+                <li>
+                  <span class="app__time">{event.time}</span>
+                  <span class:list={["app__mark", `app__mark--${event.mark}`]}></span>
+                  <span>{event.text}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="product__col product__col--term">
+    <p class="label">For your agents · same data, as text</p>
+    <div class="window terminal">
+      <div class="window__bar">
+        <span class="terminal__lights" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="terminal__title">claude · ~/postgram</span>
+        <span class="terminal__spacer" aria-hidden="true"></span>
+      </div>
+      <pre class="terminal__body">{terminal}</pre>
+    </div>
+  </div>
+</section>
+
+<style>
+  .product {
+    display: flex;
+    gap: 16px;
+    padding-bottom: 128px;
+  }
+
+  .product__col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .product__col--app { flex: 1.6 1 0%; }
+  .product__col--term { flex: 1 1 0%; }
+  .product__col .window { height: 520px; }
+
+  .mono { font-family: var(--font-mono); }
+  .muted { color: var(--color-text-muted); }
+
+  /* App frame */
+  .app { display: flex; }
+
+  .app__side {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+    width: 200px;
+    padding: 20px 12px;
+    background: var(--color-bg);
+    border-right: 1px solid var(--color-border);
+  }
+
+  .app__top { display: flex; flex-direction: column; gap: 20px; }
+
+  .app__project {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-inline: 8px;
+  }
+
+  .app__project-mark {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  .app__project-name,
+  .app__project-app { display: block; }
+  .app__project-name { font-size: 13px; font-weight: 600; line-height: 16px; }
+  .app__project-app { color: var(--color-text-muted); font-size: 11px; line-height: 14px; }
+
+  .app__nav,
+  .app__agents,
+  .app__attention,
+  .app__happened { margin: 0; padding: 0; list-style: none; }
+
+  .app__nav { display: flex; flex-direction: column; gap: 2px; }
+
+  .app__nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 32px;
+    padding-inline: 8px;
+    border-radius: 6px;
+    color: var(--color-text-muted);
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  .app__nav-item.is-active {
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-weight: 500;
+  }
+
+  .app__count {
+    padding-inline: 5px;
+    border-radius: 9999px;
+    background: var(--color-accent);
+    color: var(--color-bg);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 16px;
+  }
+
+  .app__agents {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-inline: 8px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .app__agents li { display: flex; align-items: center; gap: 8px; }
+  .app__idle { background: var(--color-text-subtle); }
+
+  .app__main {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0%;
+    gap: 28px;
+    min-width: 0;
+    padding: 36px 40px;
+    background: var(--color-bg);
+  }
+
+  .app__head { display: flex; flex-direction: column; gap: 6px; }
+  .app__title { font-size: 28px; font-weight: 600; line-height: 34px; letter-spacing: -0.02em; }
+  .app__subtitle { color: var(--color-text-muted); font-size: 14px; line-height: 18px; }
+
+  .app__block { display: flex; flex-direction: column; gap: 12px; }
+  .app__block--happened { gap: 14px; }
+
+  .app__label {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .app__label--accent { color: var(--color-accent); }
+
+  .app__attention {
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    overflow: clip;
+  }
+
+  .app__row { display: flex; gap: 14px; padding: 16px; }
+  .app__row + .app__row { border-top: 1px solid var(--color-border); }
+  .app__row.is-live { box-shadow: inset 2px 0 0 var(--color-accent); }
+
+  .app__id {
+    flex-shrink: 0;
+    width: 28px;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .app__row-body { display: flex; flex-direction: column; flex: 1 1 0%; gap: 4px; min-width: 0; }
+
+  .app__origin {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 14px;
+  }
+
+  .app__origin.is-live { color: var(--color-accent); }
+  .app__row-title { font-size: 14px; font-weight: 500; line-height: 20px; }
+  .app__row-context { color: var(--color-text-muted); font-size: 12px; line-height: 16px; }
+
+  .app__action {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    height: 28px;
+    padding-inline: 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+  }
+
+  .app__action--primary { background: var(--color-accent); color: var(--color-bg); }
+  .app__action--secondary { border: 1px solid var(--color-border-strong); }
+
+  .app__happened { display: flex; flex-direction: column; gap: 14px; }
+  .app__happened li { display: flex; align-items: center; gap: 14px; font-size: 13px; line-height: 16px; }
+
+  .app__time {
+    flex-shrink: 0;
+    width: 40px;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  .app__mark { width: 6px; height: 6px; flex-shrink: 0; border-radius: 9999px; }
+  .app__mark--live { background: var(--color-accent); }
+  .app__mark--decision { background: var(--color-state-defining); border-radius: 2px; }
+  .app__mark--done { background: var(--color-state-done); }
+
+  /* Terminal */
+  .terminal { display: flex; flex-direction: column; }
+
+  .terminal__lights { display: flex; gap: 6px; }
+  .terminal__lights span { width: 10px; height: 10px; border-radius: 9999px; background: var(--color-border-strong); }
+  .terminal__spacer { width: 46px; flex-shrink: 0; }
+
+  .terminal__title {
+    color: var(--color-text-subtle);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .terminal__body {
+    margin: 0;
+    padding: 24px;
+    overflow-x: auto;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 22px;
+  }
+
+  @media (max-width: 1100px) {
+    .product { flex-direction: column; gap: 48px; }
+    .product__col--term .window { height: auto; }
+  }
+
+  @media (max-width: 720px) {
+    .product { padding-bottom: 96px; }
+    .product__col--app .window { height: auto; }
+    .app__side { display: none; }
+    .app__main { padding: 24px 20px; }
+    .app__row { flex-wrap: wrap; row-gap: 12px; }
+    .app__row-body { flex-basis: calc(100% - 42px); }
+    .app__action { margin-left: 42px; }
+  }
+</style>

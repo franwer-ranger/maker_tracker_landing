@@ -1,0 +1,146 @@
+---
+import Icon from "./Icon.astro";
+import { installCommands, links } from "../site";
+---
+
+<section class="free section" id="self-host">
+  <div class="free__copy">
+    <h2 class="free__title display">Are we free?</h2>
+    <p class="free__text">
+      Yes. MIT licensed and self hosted. It runs on your laptop, your home server or a box on Tailscale. Your roadmap
+      never leaves your machine.
+    </p>
+    <div class="free__ctas">
+      <a class="btn btn--lg btn--primary" href={links.repo}>
+        <Icon name="github" />
+        Get it on GitHub
+      </a>
+      <a class="btn btn--lg btn--ghost" href={links.docs}>
+        Read the setup guide
+        <Icon name="arrow-right" />
+      </a>
+    </div>
+  </div>
+
+  <div class="window install">
+    <div class="window__bar">
+      <span class="install__label">Install · Docker</span>
+      <button class="install__copy" type="button" data-copy={installCommands.join("\n")}>
+        <span class="install__icon install__icon--copy"><Icon name="document-duplicate" size={14} /></span>
+        <span class="install__icon install__icon--done"><Icon name="check" size={14} /></span>
+        <span class="install__copy-text" aria-live="polite">Copy</span>
+      </button>
+    </div>
+    <pre class="install__body">{installCommands.map((command) => `$ ${command}`).join("\n")}
+
+<span class="install__result">→ ready on http://localhost:3002</span></pre>
+    <p class="install__foot">
+      <span class="dot install__ok"></span>
+      SQLite inside, daily backups included. No Redis, no external services, no account.
+    </p>
+  </div>
+</section>
+
+<style>
+  .free {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    padding-block: 128px;
+    border-top: 1px solid var(--color-border);
+    scroll-margin-top: 32px;
+  }
+
+  .free__copy { display: flex; flex-direction: column; flex: 1 1 0%; gap: 24px; min-width: 0; }
+
+  .free__title {
+    font-size: clamp(56px, 7.8vw, 112px);
+    line-height: 0.93;
+    letter-spacing: -0.02em;
+  }
+
+  .free__text { max-width: 520px; color: var(--color-text-soft); font-size: 20px; line-height: 30px; }
+
+  .free__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding-top: 8px; }
+
+  .install { display: flex; flex-direction: column; flex-shrink: 0; width: 560px; max-width: 100%; }
+
+  .install__label { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 12px; line-height: 16px; }
+
+  .install__copy {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-right: -6px;
+    padding: 4px 6px;
+    border: 0;
+    border-radius: 4px;
+    background: none;
+    color: var(--color-text-muted);
+    font: inherit;
+    font-size: 12px;
+    line-height: 16px;
+    cursor: pointer;
+    transition: color 200ms var(--ease);
+  }
+
+  .install__copy:hover { color: var(--color-text); }
+  .install__copy:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-text); }
+  .install__icon { display: flex; }
+  .install__icon--done,
+  .install__copy.is-copied .install__icon--copy { display: none; }
+  .install__copy.is-copied .install__icon--done { display: flex; }
+
+  .install__body {
+    margin: 0;
+    padding: 24px;
+    overflow-x: auto;
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 24px;
+  }
+
+  .install__foot {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  .install__ok { background: var(--color-state-done); }
+
+  @media (max-width: 1100px) {
+    .free { flex-direction: column; align-items: stretch; }
+    .install { width: auto; }
+  }
+
+  @media (max-width: 720px) {
+    .free { padding-block: 96px; gap: 48px; }
+    .free__text { font-size: 18px; line-height: 28px; }
+    .install__body { padding: 20px; font-size: 12px; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-copy]").forEach((button) => {
+    const label = button.querySelector(".install__copy-text");
+    button.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy ?? "");
+      } catch {
+        return;
+      }
+      button.classList.add("is-copied");
+      if (label) label.textContent = "Copied";
+      setTimeout(() => {
+        button.classList.remove("is-copied");
+        if (label) label.textContent = "Copy";
+      }, 2000);
+    });
+  });
+</script>

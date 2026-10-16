@@ -1,0 +1,134 @@
+---
+import Icon from "./Icon.astro";
+import { links } from "../site";
+---
+
+<section class="hero section">
+  <p class="hero__eyebrow label">
+    <span class="dot dot--live"></span>
+    Open source · Agent-first product tracker
+  </p>
+
+  <h1 class="hero__title display">
+    Ship happens.
+    <svg class="hero__underline" viewBox="0 0 246.6 11.81" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path
+        d="M27.619 11.811C26.921 11.811 26.325 11.276 26.271 10.565C26.210 9.820 26.766 9.162 27.511 9.102C69.428 5.660 111.818 3.825 154.264 3.615C134.762 3.195 115.349 3.032 96.186 2.863C64.989 2.599 32.728 2.321 1.491 5.471C0.739 5.545 0.081 5.003 0.007 4.258C-0.068 3.513 0.474 2.849 1.220 2.775C32.606 -0.395 64.942 -0.118 96.213 0.153C145.177 0.573 195.808 1.007 245.368 5.647C246.099 5.715 246.648 6.358 246.594 7.090C246.540 7.821 245.903 8.377 245.178 8.343C172.681 4.739 99.520 5.904 27.734 11.797C27.694 11.797 27.660 11.797 27.619 11.797C27.619 11.797 27.619 11.811 27.619 11.811Z"
+        fill="var(--color-accent)"
+      />
+    </svg>
+  </h1>
+
+  <div class="hero__bottom">
+    <div class="hero__copy">
+      <p class="hero__lead">
+        The product tracker built to work with AI agents. You decide what's worth building. Agents ask what's next, build
+        it, and tell you what happened.
+      </p>
+      <div class="hero__ctas">
+        <a class="btn btn--lg btn--primary" href="#self-host">
+          <Icon name="command-line" />
+          Self-host it
+        </a>
+        <a class="btn btn--lg btn--ghost" href={links.repo}>
+          Read the source
+          <Icon name="arrow-right" />
+        </a>
+      </div>
+    </div>
+
+    <ul class="hero__facts">
+      <li>MIT licensed</li>
+      <li>Rails + SQLite, no external services</li>
+      <li>Runs on your own machine</li>
+      <li>MCP + CLI for every action</li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
+    padding-top: 112px;
+    padding-bottom: 72px;
+  }
+
+  .hero__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero__title {
+    position: relative;
+    width: fit-content;
+    font-size: clamp(64px, 12.8vw, 184px);
+    line-height: 0.913;
+    letter-spacing: -0.025em;
+    white-space: nowrap;
+  }
+
+  /* Hand-drawn underline, placed as in Paper (at 184px: left 330, bottom -52, 500 × 25). */
+  .hero__underline {
+    position: absolute;
+    left: 1.793em;
+    bottom: -0.283em;
+    width: 2.717em;
+    height: 0.136em;
+  }
+
+  .hero__bottom {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 64px;
+  }
+
+  .hero__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    max-width: 600px;
+  }
+
+  .hero__lead {
+    color: var(--color-text-soft);
+    font-size: 22px;
+    line-height: 32px;
+    letter-spacing: -0.01em;
+  }
+
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero__facts {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  @media (max-width: 900px) {
+    .hero { padding-top: 72px; gap: 56px; }
+    .hero__bottom { flex-direction: column; align-items: start; gap: 40px; }
+    .hero__facts { align-items: start; }
+  }
+
+  @media (max-width: 720px) {
+    .hero__title { font-size: clamp(44px, 14.5vw, 64px); }
+    .hero__lead { font-size: 18px; line-height: 28px; }
+  }
+</style>

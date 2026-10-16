@@ -1,0 +1,27 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Hero from "../components/Hero.astro";
+import Product from "../components/Product.astro";
+import Statement from "../components/Statement.astro";
+import Steps from "../components/Steps.astro";
+import Light from "../components/Light.astro";
+import Free from "../components/Free.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Base
+  title="Maker Tracker · Ship happens."
+  description="The open source product tracker built to work with AI agents. You decide what's worth building; agents ask what's next, build it and tell you what happened. Self-hosted, MIT."
+>
+  <Nav />
+  <main>
+    <Hero />
+    <Product />
+    <Statement />
+    <Steps />
+    <Light />
+    <Free />
+  </main>
+  <Footer />
+</Base>

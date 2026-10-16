@@ -1,0 +1,80 @@
+---
+import Icon from "./Icon.astro";
+import Logo from "./Logo.astro";
+import { links } from "../site";
+---
+
+<header class="nav section">
+  <a href="/" class="nav__brand link-plain" aria-label="Maker Tracker, home">
+    <Logo />
+    <span>Maker Tracker</span>
+  </a>
+
+  <nav class="nav__links" aria-label="Sections">
+    <a class="link" href="#how-it-works">How it works</a>
+    <a class="link" href="#for-agents">For agents</a>
+    <a class="link" href="#self-host">Self-host</a>
+    <a class="link" href={links.docs}>Docs</a>
+  </nav>
+
+  <div class="nav__actions">
+    <a class="btn btn--sm btn--secondary" href={links.repo}>
+      <Icon name="github" />
+      GitHub
+    </a>
+    <a class="btn btn--sm btn--light" href="#self-host">Self-host it</a>
+  </div>
+</header>
+
+<style>
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav__brand,
+  .nav__actions {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    width: 280px;
+  }
+
+  .nav__brand {
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .nav__brand:focus-visible {
+    outline: none;
+    border-radius: 7px;
+    box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-text);
+  }
+
+  .nav__links {
+    display: flex;
+    gap: 32px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .nav__actions {
+    gap: 8px;
+    justify-content: end;
+  }
+
+  @media (max-width: 1100px) {
+    .nav__links { display: none; }
+    .nav__brand, .nav__actions { width: auto; }
+  }
+
+  @media (max-width: 480px) {
+    .nav__actions .btn--secondary { display: none; }
+  }
+</style>

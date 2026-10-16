@@ -1,0 +1,63 @@
+---
+// Each word goes from 28% to 100% opacity as it crosses the reading line
+// (IntersectionObserver, no scroll listener).
+const lead = "You decide what's worth building.";
+const rest = "Agents build it, and leave a trail you can actually read.";
+const words = (text: string) => text.split(" ");
+---
+
+<section class="statement section">
+  <p class="label">Made by makers. For makers.</p>
+  <p class="statement__text display" data-reveal>
+    <span class="statement__line">{words(lead).map((word) => <span class="word">{word} </span>)}</span>
+    <span class="statement__line">{words(rest).map((word) => <span class="word">{word} </span>)}</span>
+  </p>
+</section>
+
+<style>
+  .statement {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding-block: 128px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .statement__text {
+    max-width: 1180px;
+    font-size: clamp(40px, 6.1vw, 88px);
+    line-height: 1.045;
+    letter-spacing: -0.015em;
+  }
+
+  .statement__line { display: block; }
+
+  /* Fully readable by default; only dimmed once the script is running. */
+  .word { transition: color 600ms var(--ease); }
+  :global(html.js) .word:not(.is-read) { color: color-mix(in srgb, var(--color-text) 28%, transparent); }
+
+  @media (max-width: 720px) {
+    .statement { padding-block: 96px; gap: 32px; }
+  }
+</style>
+
+<script>
+  const words = document.querySelectorAll<HTMLElement>("[data-reveal] .word");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (reduced) {
+    words.forEach((word) => word.classList.add("is-read"));
+  } else {
+    // The reading line sits at 65% of the viewport height.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const above = entry.boundingClientRect.top < (entry.rootBounds?.bottom ?? 0);
+          entry.target.classList.toggle("is-read", entry.isIntersecting || above);
+        }
+      },
+      { rootMargin: "0px 0px -35% 0px" },
+    );
+    words.forEach((word) => observer.observe(word));
+  }
+</script>

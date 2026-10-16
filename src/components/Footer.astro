@@ -1,0 +1,48 @@
+---
+import Logo from "./Logo.astro";
+import { links } from "../site";
+---
+
+<footer class="footer section">
+  <div class="footer__brand">
+    <p class="footer__name"><Logo size={22} /> Maker Tracker</p>
+    <p class="footer__credit display">Made by Christian, Romer and Fran.</p>
+  </div>
+  <nav class="footer__links" aria-label="Project">
+    <a class="link" href={links.repo}>GitHub</a>
+    <a class="link" href={links.docs}>Docs</a>
+    <a class="link" href={links.license}>MIT License</a>
+  </nav>
+</footer>
+
+<style>
+  .footer {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 32px;
+    padding-top: 48px;
+    padding-bottom: 40px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .footer__brand { display: flex; flex-direction: column; gap: 16px; }
+
+  .footer__name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+  }
+
+  .footer__credit { color: var(--color-text-muted); font-size: 24px; line-height: 28px; }
+
+  .footer__links { display: flex; gap: 32px; font-size: 14px; line-height: 18px; }
+
+  @media (max-width: 720px) {
+    .footer { flex-direction: column; align-items: start; }
+    .footer__links { gap: 24px; }
+  }
+</style>
