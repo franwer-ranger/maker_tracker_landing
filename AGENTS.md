@@ -15,6 +15,11 @@ npm run build     # sitio estático en dist/
 npm run preview   # sirve dist/
 ```
 
+## Publicación
+
+- Repo público `franwer-ranger/maker_tracker_landing`, en GitHub Pages con el dominio `makertracker.dev` (`public/CNAME`, DNS en Namecheap).
+- Cada push a `main` la construye y la publica (`.github/workflows/deploy.yml`). Es decir: **pushear es publicar**, así que se confirma con Fran.
+
 ## Estructura
 
 - `src/styles/global.css`: tokens (mismos nombres y valores que en Paper y la app), fuentes, botones y foco.

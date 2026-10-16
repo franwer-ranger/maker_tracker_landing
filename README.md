@@ -2,7 +2,9 @@
 
 The public landing page of [Maker Tracker](https://github.com/franwer-ranger/maker_tracker), the open source product tracker built to work with AI agents.
 
-Static site built with [Astro](https://astro.build). No UI framework, no tracking.
+Live at **[makertracker.dev](https://makertracker.dev)**. Static site built with [Astro](https://astro.build). No UI framework, no tracking.
+
+Every push to `main` builds it and publishes it to GitHub Pages (`.github/workflows/deploy.yml`).
 
 ```bash
 npm install
